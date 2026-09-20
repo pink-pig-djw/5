@@ -1,0 +1,7 @@
+/.git/**
+/node_modules/**
+/.wrangler/**
+/wrangler.jsonc
+/README.md
+/scripts/**
+/package*.json
