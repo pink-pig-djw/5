@@ -1,6 +1,6 @@
 # Eidolon
 
-静态动漫角色档案：626 位角色、23 部作品。无需构建步骤。
+静态动漫角色档案：811 位角色、33 部作品。无需构建步骤。
 
 - `index.html`：页面结构；`css/style.css`：共享样式骨架（布局、组件结构、响应式），所有颜色、圆角、边框、阴影和字体都读取设计令牌。
 - `css/theme-paper.css`、`theme-night.css`、`theme-manga.css`、`theme-sakura.css`、`theme-cyber.css`、`theme-wa.css`：六套可切换的界面风格，各自只定义令牌和少量专属装饰。
@@ -14,7 +14,7 @@
 
 Cloudflare Workers Builds 监听 `main`，使用 `npx wrangler deploy`；`wrangler.jsonc` 指向根目录静态资源，`.assetsignore` 排除开发文件。不要再将图片内嵌回 HTML 或数据文件。所有部署资源必须小于 25 MiB。
 
-本地存储仍使用 `eizou.character.archive.v1` 和 `eizou.character.preferences.v1`，schemaVersion 1 / catalogVersion 3 不变。旧 `seedImageRef` 自动解析为独立资源；已有用户上传的 Base64 图片、评分、备注、自定义档案和删除记录保留。JSON 备份内的内置图片使用相对路径，上传图片保留原有数据格式。
+本地存储仍使用 `eizou.character.archive.v1` 和 `eizou.character.preferences.v1`，schemaVersion 1 保持不变，catalogVersion 升至 4。目录 v4 为旧用户追加本次新增的 185 位角色，不恢复之前删除的旧角色，不覆盖个人编辑。旧 `seedImageRef` 自动解析为独立资源；已有用户上传的 Base64 图片、评分、备注、自定义档案和删除记录保留。JSON 备份内的内置图片使用相对路径，上传图片保留原有数据格式。
 
 网站 ZIP 包含预置目录和所有资源；个人修改仍请另行导出 JSON。离线副本与在线站点的浏览器存储相互独立。
 `node scripts/check-assets.mjs` 检查资源路径、样式表引用的字体、目录 ID、Base64 误嵌入与文件大小，并确认每套风格都定义了骨架用到的全部设计令牌、且出现在风格菜单里。Wrangler 部署时会自动运行此检查。
@@ -39,3 +39,24 @@ Cloudflare Workers Builds 监听 `main`，使用 `npx wrangler deploy`；`wrangl
 - 对比度：所有风格的文字对比度均不低于 WCAG AA（4.5:1，大字 3:1）。
 - 响应式：宽度大于 700px 时侧栏常驻；700px 及以下侧栏改为抽屉，详情与表单改为底部抽屉。
 - 动效遵循 `prefers-reduced-motion`（樱语的花瓣漂浮、赛博的表盘旋转与扫描线、光标闪烁都会随之关闭）；弹窗动画使用 `@starting-style`，不支持的浏览器会直接显示。渐变文字在系统强制颜色模式下自动回退为纯色；装饰性的生成文字使用空替代文本（`content: "…" / ""`），读屏软件会跳过。
+
+## 2026-09-30 目录扩充
+
+新增角色各有两段原创中文简介、日文名、声优与来源链接，图片均为独立站内文件。
+
+| 作品 | 新增档案 |
+|---|---:|
+| 冰菓 | 16 |
+| 东京喰种 | 32 |
+| 新世纪福音战士（EVA） | 22 |
+| 与你相恋到生命尽头 | 9 |
+| 尼古喵喵 | 8 |
+| 夏日重现 | 14 |
+| BanG Dream! It's MyGO!!!!! | 13 |
+| 月色真美 | 13 |
+| 刀剑神域 | 37 |
+| 约定的梦幻岛 | 21 |
+
+EVA 的惣流与式波按不同版本分列；金木研与佐佐木琲世合并为同一人物。简介中的改编差异与剧情范围有单独说明，未知资料留空。
+
+运行 `node scripts/check-catalog.mjs` 可验证 v1/v2/v3 升级、用户编辑、上传图片、删除记录与 v4 重复加载的兼容性。
