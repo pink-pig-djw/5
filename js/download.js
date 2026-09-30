@@ -10,8 +10,10 @@ async function downloadWebsite() {
     }
     toast('正在打包完整网站，图片较多，请稍候…');
     const files = [...new Set([
-      'index.html', 'css/style.css', 'data/characters.js', 'js/app.js',
-      'js/download.js', 'js/jszip.min.js', 'js/JSZIP-LICENSE.txt',
+      'index.html', 'css/style.css', 'css/theme-paper.css', 'css/theme-night.css', 'css/theme-manga.css',
+      'data/characters.js', 'js/app.js', 'js/download.js', 'js/jszip.min.js', 'js/JSZIP-LICENSE.txt',
+      'assets/fonts/instrument-serif-latin-400.woff2', 'assets/fonts/instrument-serif-latin-400-italic.woff2', 'assets/fonts/anton-latin-400.woff2',
+      'assets/fonts/OFL-InstrumentSerif.txt', 'assets/fonts/OFL-Anton.txt',
       ...Object.values(EIDOLON_DATA.assetData),
       ...[EIDOLON_DATA.seedData, EIDOLON_DATA.catalogBaseline, EIDOLON_DATA.catalogImageBaseline]
         .flatMap(list => list.flatMap(c => [c.image, c.fullImage, c.imageUrl, c.fullImageUrl]))

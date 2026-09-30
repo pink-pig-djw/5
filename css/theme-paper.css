@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Paper (纸墨) — a printed catalogue.
+   Warm paper, black ink, and vermilion "red ink" reserved for what you write
+   (ratings, notes, the main action). Each series is a print on a tinted mat.
+   ========================================================================== */
+
+:root[data-theme="paper"]{
+  color-scheme:light;
+
+  --bg:#f3eee4;
+  --bg-glass:rgba(243,238,228,.88);
+  --surface:#faf7f0;
+  --sunken:#ebe4d6;
+
+  --text:#1f1b16;
+  --text-2:#4b443a;
+  --text-3:#5e5649;
+  --text-4:#6d6456;
+  --line:rgba(31,27,22,.11);
+  --line-2:rgba(31,27,22,.19);
+  --line-3:rgba(31,27,22,.32);
+  --chip:rgba(31,27,22,.05);
+  --chip-2:rgba(31,27,22,.09);
+  --scrollbar:rgba(31,27,22,.28);
+
+  --accent:#c4381f;
+  --accent-hi:#b93219;
+  --accent-text:#b93219;
+  --on-accent:#fff8ee;
+  --accent-soft:rgba(196,56,31,.08);
+  --accent-line:rgba(196,56,31,.4);
+  --ok:#2f7d4f;
+  --warn:#a6261a;
+  --warn-soft:rgba(166,38,26,.08);
+  --warn-line:rgba(166,38,26,.38);
+  --selection:rgba(196,56,31,.22);
+  --focus:#b93219;
+
+  --sb-bg:#ebe4d6;
+  --sb-border:1px solid var(--line-2);
+  --sb-text:var(--text);
+  --sb-text-2:var(--text-2);
+  --sb-text-3:var(--text-3);
+  --sb-label:var(--text-4);
+  --sb-line:var(--line-2);
+  --sb-hover:var(--chip-2);
+  --sb-active-bg:var(--surface);
+  --sb-active-text:var(--text);
+  --sb-active-count:var(--accent-text);
+  --sb-active-shadow:var(--shadow-sm),inset 0 0 0 1px var(--line);
+  --sb-mark:var(--accent);
+  --sb-leader:var(--line-3);
+
+  --mark-bg:var(--accent);
+  --mark-fg:#fff6ea;
+  --mark-cut:#c4381f;
+  --mark-r:9px;
+  --mark-shadow:inset 0 0 0 2px rgba(255,246,234,.3),0 2px 0 rgba(110,26,12,.4),0 10px 18px -8px rgba(170,44,22,.65);
+  --avatar-bg:var(--text);
+  --avatar-fg:var(--surface);
+
+  --mat-l:.9;--mat-c:.045;--work-l:.43;--work-c:.14;--chip-l:.72;--chip-c:.13;
+  --mat-glow:rgba(255,255,255,.4);
+  --chip-ring:inset 0 0 0 1px rgba(31,27,22,.16);
+  --dot-r:2px;
+
+  --art-shadow:rgba(58,40,20,.32);
+  --art-rim:transparent;
+  --art-filter:drop-shadow(0 0 1.2px var(--art-rim)) drop-shadow(0 8px 8px var(--art-shadow));
+  --art-filter-lg:drop-shadow(0 0 1.2px var(--art-rim)) drop-shadow(0 16px 16px var(--art-shadow));
+  --opaque-r:3px;
+  --opaque-shadow:0 0 0 1px rgba(31,27,22,.16),0 12px 20px -10px var(--art-shadow);
+  --art-pad:34px 16px 18px;
+
+  --r-sm:6px;--r-md:8px;--r-lg:10px;--r-xl:14px;--r-pill:999px;--r-card:8px;--r-dialog:14px;
+
+  --shadow-sm:0 1px 2px rgba(58,40,20,.08);
+  --shadow-md:0 16px 30px -16px rgba(58,40,20,.42),0 2px 6px rgba(58,40,20,.07);
+  --shadow-pop:0 40px 90px -30px rgba(40,26,12,.55),0 0 0 1px rgba(31,27,22,.12);
+  --stuck-shadow:0 14px 26px -18px rgba(58,40,20,.5);
+
+  --field-bg:var(--surface);
+  --field-border:var(--line-2);
+  --field-focus-border:var(--accent-line);
+  --field-focus-shadow:0 0 0 3px var(--accent-soft);
+  --tab-active-bg:var(--text);
+  --tab-active-text:var(--surface);
+  --input-bg:var(--bg);
+  --input-border:var(--line-3);
+
+  --btn-bg:var(--surface);
+  --btn-border:var(--line-3);
+  --btn-hover-bg:var(--bg);
+  --btn-hover-border:var(--text-3);
+  --btn-shadow:inset 0 1px 0 rgba(255,255,255,.7),var(--shadow-sm);
+  --primary-border:#9b2a15;
+  --primary-hover-border:#8a2412;
+  --primary-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 1px 0 rgba(90,20,8,.45),0 8px 16px -8px rgba(196,56,31,.6);
+
+  --card-bg:var(--surface);
+  --card-border:var(--line-2);
+  --card-shadow:var(--shadow-sm);
+  --card-hover-border:var(--line-3);
+  --card-hover-shadow:var(--shadow-md);
+  --frame:8px;--frame-sm:6px;
+  --portrait-r:var(--r-sm);
+  --portrait-edge:inset 0 0 0 1px rgba(31,27,22,.07);
+  --body-pad:13px 8px 6px;--body-pad-sm:11px 6px 4px;
+  --lead-bg:var(--text);--lead-text:var(--surface);
+  --villain-bg:var(--accent);--villain-text:var(--on-accent);
+  --badge-border:var(--line-3);
+  --badge-bg:var(--surface);
+  --skel-a:#ebe4d6;--skel-b:#f3eee4;
+
+  --dialog-bg:var(--surface);
+  --dialog-border:var(--line-3);
+  --scrim:rgba(38,28,18,.5);
+  --da-bg:var(--bg);
+  --stage-bg:radial-gradient(70% 60% at 50% 40%,rgba(255,255,255,.4),transparent),var(--bg);
+  --caption-bg:var(--surface);
+
+  --toast-bg:#1f1b16;--toast-ink:#f6efe3;--toast-ok:#7fd6a4;--toast-action:#ffb39f;
+
+  --page-bg:none;
+  --grain-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 1.5 -.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-o:.08;
+  --chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235e5649' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  --font-display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --display-style:italic;
+  --h-weight:700;
+  --h1-size:44px;--h2-size:38px;
+  --brand-size:35px;--stat-size:48px;--score-size:62px;--rating-size:21px;--index-size:16px;--secno-size:24px;--pos-size:18px;--avatar-size:21px;
+  --meter-fill:var(--accent);--meter-empty:var(--line-2);
+  --choice-on-bg:var(--text);--choice-on-text:var(--surface);
+}
+
+/* Tokens built from the per-series tint have to live where the tint lives. */
+:root[data-theme="paper"] :is(.card,.detail-layout){
+  --portrait-bg:radial-gradient(85% 60% at 50% 32%,var(--mat-glow),transparent 72%),linear-gradient(180deg,var(--mat),var(--mat-2));
+  --panel-bg:radial-gradient(85% 55% at 50% 30%,var(--mat-glow),transparent 72%),linear-gradient(180deg,var(--mat),var(--mat-2));
+}
+
+/* A double rule under the masthead, like a printed folio line. */
+[data-theme="paper"] .page-head{border-bottom:4px double var(--line-3)}
+[data-theme="paper"] .eyebrow::after{content:"";flex:1;height:1px;background:var(--line-2)}
+[data-theme="paper"] .section-title::after{content:"";position:absolute;left:0;bottom:-1px;width:76px;height:3px;background:var(--w-chip)}

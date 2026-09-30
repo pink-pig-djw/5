@@ -2,10 +2,12 @@
 
 静态动漫角色档案：626 位角色、23 部作品。无需构建步骤。
 
-- `index.html`：页面结构；`css/style.css`：原有样式。
-- `js/app.js`：原有交互、本地保存与导入导出。
+- `index.html`：页面结构；`css/style.css`：共享样式骨架（布局、组件结构、响应式），所有颜色、圆角、边框、阴影和字体都读取设计令牌。
+- `css/theme-paper.css`、`css/theme-night.css`、`css/theme-manga.css`：三套可切换的界面风格，各自只定义令牌和少量专属装饰。
+- `js/app.js`：交互、本地保存与导入导出，以及卡片与详情的渲染。
 - `data/characters.js`：完整角色目录、图片相对路径及旧目录迁移基线。
 - `assets/characters/`：从原 HTML 无损提取的图片，按角色 slug 和内容哈希命名；相同图片去重。
+- `assets/fonts/`：自托管的展示字体（Latin 子集，SIL OFL 1.1，许可见同目录 `OFL-*.txt`）：Instrument Serif 用于纸墨与幽夜，Anton 用于漫画；两者只用于字标与数字，中文使用系统字体，字体仅在对应风格启用时才会加载。
 - `js/download.js` 与 `js/jszip.min.js`：下载完整离线网站 ZIP；JSZip 许可见 `js/JSZIP-LICENSE.txt`。
 
 本地预览：在仓库根目录运行 `python -m http.server 8000`。也可完整下载并解压网站包后打开 `index.html`。
@@ -15,4 +17,22 @@ Cloudflare Workers Builds 监听 `main`，使用 `npx wrangler deploy`；`wrangl
 本地存储仍使用 `eizou.character.archive.v1` 和 `eizou.character.preferences.v1`，schemaVersion 1 / catalogVersion 3 不变。旧 `seedImageRef` 自动解析为独立资源；已有用户上传的 Base64 图片、评分、备注、自定义档案和删除记录保留。JSON 备份内的内置图片使用相对路径，上传图片保留原有数据格式。
 
 网站 ZIP 包含预置目录和所有资源；个人修改仍请另行导出 JSON。离线副本与在线站点的浏览器存储相互独立。
-`node scripts/check-assets.mjs` 检查资源路径、目录 ID、Base64 误嵌入与文件大小。Wrangler 部署时会自动运行此检查。
+`node scripts/check-assets.mjs` 检查资源路径、样式表引用的字体、目录 ID、Base64 误嵌入与文件大小，并确认每套风格都定义了骨架用到的全部设计令牌、且出现在风格菜单里。Wrangler 部署时会自动运行此检查。
+
+## 界面风格
+
+顶栏的调色盘按钮可在三套风格之间切换，选择保存在 `eizou.theme.v1`（默认「纸墨」），切换时用 View Transitions 做整页淡入淡出（不支持的浏览器直接切换）。三套风格共用同一份 DOM 和脚本，功能完全一致。
+
+| 风格 | 气质 | 要点 |
+|---|---|---|
+| 纸墨 Paper | 印刷图录 | 暖纸底、墨色文字；朱红只用于"你写下的内容"（评分、备注、主按钮）；作品是装裱在染色衬纸上的印刷品；印章 Logo、目录式侧栏、双线报头、章节序号 |
+| 幽夜 Night | 电影感深色 | 近黑玻璃质感、幽紫极光；每张立绘延伸成自身颜色的模糊背景；评分为金色 |
+| 漫画 Manga | 少年漫画分格 | 白纸黑墨加荧光黄；3px 黑框与硬阴影；按作品着色的网点；立绘带贴纸式白边；黑色侧栏；章节标题条 |
+
+- 令牌：每套风格在 `css/theme-*.css` 中声明完整令牌（颜色、圆角、边框、阴影、字体、内边距……）。引用了"每张卡片各自作品色"的令牌（如 `--portrait-bg`）必须声明在卡片层级，不能放在 `:root`，否则 `var()` 会在声明处提前解析失败。
+- 新增风格：复制一个 `theme-*.css`，把选择器改为 `:root[data-theme="新名称"]`，在 `index.html` 的样式链接、风格菜单和 `js/app.js` 的 `THEMES` 中登记；`check-assets.mjs` 会检查令牌是否齐全。
+- 作品主题色：每部预置作品在 `js/app.js` 的 `WORK_HUES` 中有固定色相（OKLCH），自定义作品按名称哈希取色。卡片、侧栏、分组标题和详情通过 `--h` 共用同一色相，各风格自行决定它变成衬纸、荧光边还是网点。
+- 图片：始终完整显示、不裁切（`object-fit: contain`）。完全不透明的图片会自动识别（用 8×8 画布探测透明度，`file://` 下画布受限时自动降级）并按风格加圆角或粗描边。
+- 对比度：所有风格的文字对比度均不低于 WCAG AA（4.5:1，大字 3:1）。
+- 响应式：宽度大于 700px 时侧栏常驻；700px 及以下侧栏改为抽屉，详情与表单改为底部抽屉。
+- 动效遵循 `prefers-reduced-motion`；弹窗动画使用 `@starting-style`，不支持的浏览器会直接显示。

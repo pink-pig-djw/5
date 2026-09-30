@@ -1,0 +1,343 @@
+/* ==========================================================================
+   Manga (漫画) — a weekly-magazine panel layout.
+   Black ink, white paper and one highlighter yellow. Chunky outlines, hard
+   offset shadows, screentone dots tinted per series, die-cut sticker art.
+   ========================================================================== */
+
+@font-face{font-family:"Anton";font-style:normal;font-weight:400;font-display:swap;src:url("../assets/fonts/anton-latin-400.woff2") format("woff2")}
+
+:root[data-theme="manga"]{
+  color-scheme:light;
+
+  --bg:#fbf9f3;
+  --bg-glass:rgba(251,249,243,.95);
+  --surface:#ffffff;
+  --sunken:#f0ece1;
+
+  --text:#0d0d0d;
+  --text-2:#262626;
+  --text-3:#3f3f3f;
+  --text-4:#575757;
+  --line:rgba(13,13,13,.18);
+  --line-2:rgba(13,13,13,.5);
+  --line-3:#0d0d0d;
+  --chip:rgba(13,13,13,.06);
+  --chip-2:rgba(13,13,13,.1);
+  --scrollbar:#0d0d0d;
+
+  --accent:#ffd60a;
+  --accent-hi:#ffe14d;
+  --accent-text:#0d0d0d;
+  --on-accent:#0d0d0d;
+  --accent-soft:rgba(255,214,10,.42);
+  --accent-line:#0d0d0d;
+  --ok:#0a7a35;
+  --warn:#d7191f;
+  --warn-soft:rgba(215,25,31,.08);
+  --warn-line:#d7191f;
+  --selection:#ffd60a;
+  --focus:#0d0d0d;
+
+  --sb-bg:#0d0d0d;
+  --sb-border:0;
+  --sb-text:#f6f3ea;
+  --sb-text-2:#e3dfd2;
+  --sb-text-3:#b9b4a5;
+  --sb-label:#ffd60a;
+  --sb-line:rgba(255,255,255,.3);
+  --sb-hover:rgba(255,255,255,.12);
+  --sb-active-bg:#ffd60a;
+  --sb-active-text:#0d0d0d;
+  --sb-active-count:#0d0d0d;
+  --sb-active-shadow:none;
+  --sb-mark:transparent;
+  --sb-leader:rgba(255,255,255,.4);
+
+  --mark-bg:#ffd60a;
+  --mark-fg:#0d0d0d;
+  --mark-cut:#ffd60a;
+  --mark-border:3px solid #0d0d0d;
+  --mark-r:0;
+  --mark-shadow:3px 3px 0 #0d0d0d;
+  --avatar-bg:#0d0d0d;
+  --avatar-fg:#ffd60a;
+
+  --mat-l:.95;--mat-c:.03;--work-l:.22;--work-c:.03;--chip-l:.82;--chip-c:.16;--tone-l:.8;--tone-c:.16;
+  --mat-glow:transparent;
+  --chip-ring:inset 0 0 0 2px #0d0d0d;
+  --dot-r:0;
+
+  --art-shadow:#0d0d0d;
+  --art-filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(4px 5px 0 #0d0d0d);
+  --art-filter-lg:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(6px 8px 0 #0d0d0d);
+  --opaque-r:0;
+  --opaque-shadow:0 0 0 3px #0d0d0d,6px 6px 0 3px #0d0d0d;
+  --art-pad:36px 20px 22px;
+
+  --r-sm:0;--r-md:2px;--r-lg:2px;--r-xl:4px;--r-pill:2px;--r-card:3px;--r-dialog:3px;
+  --tab-r:0;--icon-btn-r:0;--nav-r:0;--btn-r:2px;--badge-r:0;--tag-r:0;--choice-r:0;
+
+  --shadow-sm:none;
+  --shadow-md:5px 5px 0 #0d0d0d;
+  --shadow-pop:10px 10px 0 #0d0d0d;
+  --stuck-border:3px solid #0d0d0d;
+  --stuck-shadow:0 5px 0 rgba(13,13,13,.1);
+
+  --field-bg:#ffffff;
+  --field-border:#0d0d0d;
+  --field-bw:3px;
+  --field-shadow:3px 3px 0 #0d0d0d;
+  --field-focus-border:#0d0d0d;
+  --field-focus-shadow:4px 4px 0 #ffd60a,5px 5px 0 1px #0d0d0d;
+  --seg-pad:0;
+  --tab-active-bg:#ffd60a;
+  --tab-active-text:#0d0d0d;
+  --input-bg:#ffffff;
+  --input-border:#0d0d0d;
+  --input-bw:3px;
+  --input-focus-bg:#fffbe6;
+  --input-focus-shadow:4px 4px 0 #ffd60a;
+  --num-border:2px solid #0d0d0d;
+
+  --btn-bg:#ffffff;
+  --btn-border:#0d0d0d;
+  --btn-bw:3px;
+  --btn-hover-bg:#fff7c2;
+  --btn-hover-border:#0d0d0d;
+  --btn-shadow:3px 3px 0 #0d0d0d;
+  --btn-weight:800;
+  --primary-border:#0d0d0d;
+  --primary-hover-border:#0d0d0d;
+  --primary-shadow:3px 3px 0 #0d0d0d;
+  --primary-hover-bg:#ffe14d;
+
+  --card-bg:#ffffff;
+  --card-border:#0d0d0d;
+  --card-bw:3px;
+  --card-shadow:5px 5px 0 #0d0d0d;
+  --card-hover-transform:translate(-3px,-3px);
+  --card-hover-border:#0d0d0d;
+  --card-hover-shadow:8px 8px 0 #0d0d0d;
+  --card-focus-border:#0d0d0d;
+  --frame:0;--frame-sm:0;
+  --portrait-r:0;
+  --portrait-edge:none;
+  --body-pad:12px 12px 10px;--body-pad-sm:10px 10px 8px;
+  --body-border:0;
+  --foot-border:2px solid #0d0d0d;
+  --grid-gap:28px;
+  --badge-bw:2px;
+  --badge-border:#0d0d0d;
+  --badge-bg:#ffffff;
+  --badge-text:#0d0d0d;
+  --lead-bg:#0d0d0d;--lead-border:#0d0d0d;--lead-text:#ffffff;
+  --villain-bg:#d7191f;--villain-border:#0d0d0d;--villain-text:#ffffff;
+  --tag-bw:2px;
+  --tag-border:#0d0d0d;
+  --tag-bg:#ffffff;
+  --tag-hash:#0d0d0d;
+  --index-color:#0d0d0d;
+  --skel-a:#e8e3d6;--skel-b:#f7f3e8;
+
+  --dialog-bg:#ffffff;
+  --dialog-border:#0d0d0d;
+  --dialog-bw:4px;
+  --dialog-line:3px solid #0d0d0d;
+  --scrim:radial-gradient(rgba(255,255,255,.2) 1.2px,transparent 1.6px) 0 0/6px 6px,rgba(13,13,13,.62);
+  --scrim-blur:0px;
+  --dh-bg:#0d0d0d;
+  --dh-text:#ffffff;
+  --da-bg:#f0ece1;
+  --stage-bg:var(--bg);
+  --caption-bg:#ffffff;
+  --grabber:#ffffff;
+  --pos-color:#ffffff;
+
+  --facts-gap:3px;--facts-border:3px solid #0d0d0d;--facts-line:#0d0d0d;
+  --fact-bg:#ffffff;
+  --note-bar:8px;--note-color:#0d0d0d;--note-bg:rgba(255,214,10,.42);--note-border:3px solid #0d0d0d;--note-r:0;
+  --rating-bg:#ffd60a;
+  --rating-border:#0d0d0d;
+  --rating-bw:3px;
+  --rating-color:#0d0d0d;
+  --meter-fill:#0d0d0d;--meter-empty:rgba(13,13,13,.16);--meter-r:0;
+  --choice-bw:2px;
+  --choice-on-bg:#0d0d0d;--choice-on-border:#0d0d0d;--choice-on-text:#ffd60a;
+  --score-on-bg:#ffd60a;--score-on-border:#0d0d0d;--score-on-text:#0d0d0d;--score-on-shadow:3px 3px 0 #0d0d0d;
+  --check-accent:#0d0d0d;
+
+  --toast-bg:#0d0d0d;--toast-ink:#ffffff;--toast-ok:#ffd60a;--toast-action:#ffd60a;
+  --toast-border:3px solid #0d0d0d;
+  --toast-shadow:5px 5px 0 #ffd60a;
+  --storage-fill:#ffd60a;--storage-h:8px;--storage-r:0;
+  --topbar-border:3px solid #0d0d0d;
+  --section-border:3px solid #0d0d0d;
+  --pill-bw:2px;
+  --pill-border:#0d0d0d;
+
+  --page-bg:radial-gradient(rgba(13,13,13,.09) 1.1px,transparent 1.5px) 0 0/12px 12px,#fbf9f3;
+  --grain-img:none;
+  --grain-o:0;
+  --chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230d0d0d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  --font-display:"Anton","Impact","Haettenschweiler","Arial Narrow Bold","Arial Black",sans-serif;
+  --display-style:normal;
+  --h-weight:800;
+  --h1-size:54px;--h2-size:44px;
+  --brand-size:33px;--brand-case:uppercase;--brand-tracking:.03em;
+  --stat-size:52px;--score-size:80px;--rating-size:26px;--index-size:18px;--secno-size:30px;--pos-size:22px;--avatar-size:20px;
+  --icon-w:2.2;
+}
+
+/* Tokens built from the per-series tint have to live where the tint lives. */
+:root[data-theme="manga"] :is(.card,.detail-layout){
+  --portrait-bg:#ffffff;
+  --panel-bg:#ffffff;
+}
+
+/* ---------- screentone: dots tinted with the series colour ---------- */
+[data-theme="manga"] .portrait::before,
+[data-theme="manga"] .detail-image::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at center,var(--tone) 1.7px,transparent 2.2px) 0 0/7px 7px;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.22),#000 95%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.22),#000 95%);
+}
+[data-theme="manga"] .portrait{border-bottom:3px solid #0d0d0d}
+
+/* ---------- sidebar (inverted) ---------- */
+[data-theme="manga"] .sidebar .brand-mark{box-shadow:3px 3px 0 #ffffff}
+[data-theme="manga"] .sidebar :focus-visible{outline-color:#ffd60a}
+[data-theme="manga"] .sidebar .work-dot{box-shadow:inset 0 0 0 2px #ffffff}
+[data-theme="manga"] .nav-button{font-weight:600}
+[data-theme="manga"] .nav-button.active{font-weight:800}
+[data-theme="manga"] .nav-button .count{font-size:18px;letter-spacing:.02em}
+[data-theme="manga"] .side-label{font-weight:800;letter-spacing:.3em}
+[data-theme="manga"] .brand small{color:#ffd60a;letter-spacing:.3em}
+
+/* ---------- topbar / masthead ---------- */
+[data-theme="manga"] .topbar-left strong{font-weight:800}
+[data-theme="manga"] .icon-btn:hover{background:#ffd60a;border-color:#0d0d0d;color:#0d0d0d}
+[data-theme="manga"] .page-head{border-bottom:5px solid #0d0d0d;padding-bottom:30px}
+[data-theme="manga"] .page-head::before{
+  content:"";position:absolute;right:0;top:0;z-index:-1;width:360px;height:180px;pointer-events:none;opacity:.4;
+  background:radial-gradient(circle at center,#0d0d0d 1.7px,transparent 2.3px) 0 0/9px 9px;
+  -webkit-mask-image:linear-gradient(225deg,#000 0%,transparent 72%);
+  mask-image:linear-gradient(225deg,#000 0%,transparent 72%);
+}
+[data-theme="manga"] .eyebrow{
+  justify-self:start;padding:3px 14px 3px 12px;background:#0d0d0d;color:#ffd60a;letter-spacing:.28em;transform:skewX(-10deg);
+}
+[data-theme="manga"] .eyebrow::after{display:none}
+[data-theme="manga"] .page-head h1{
+  justify-self:start;padding:0 10px 0 4px;letter-spacing:.02em;-webkit-text-stroke:.9px #0d0d0d;
+  background:linear-gradient(transparent 58%,#ffd60a 58%,#ffd60a 92%,transparent 92%);
+}
+[data-theme="manga"] .head-stats{gap:22px;margin-top:24px}
+[data-theme="manga"] .stat,[data-theme="manga"] .stat:first-child{padding:6px 16px 8px;border:3px solid #0d0d0d;background:#ffffff;box-shadow:4px 4px 0 #0d0d0d}
+[data-theme="manga"] .stat:nth-child(2){transform:rotate(-1deg)}
+[data-theme="manga"] .stat:nth-child(3){background:#ffd60a;transform:rotate(1deg)}
+[data-theme="manga"] .stat span{font-weight:700;color:#0d0d0d}
+[data-theme="manga"] .stat .meter-mini{background:rgba(13,13,13,.25)}
+
+/* ---------- controls ---------- */
+[data-theme="manga"] .view-tab{height:38px;font-weight:700}
+[data-theme="manga"] .view-tab+.view-tab{border-left:3px solid #0d0d0d}
+[data-theme="manga"] .view-tab:hover{background:#fff7c2;color:#0d0d0d}
+[data-theme="manga"] .view-tab.active:hover{background:#ffd60a}
+[data-theme="manga"] .filter-field label{font-weight:700;color:#0d0d0d}
+[data-theme="manga"] .search kbd{border:2px solid #0d0d0d;background:#ffffff;color:#0d0d0d}
+[data-theme="manga"] .btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #0d0d0d}
+[data-theme="manga"] .btn:active{transform:translate(3px,3px);box-shadow:0 0 0 #0d0d0d}
+[data-theme="manga"] .btn.subtle:hover,[data-theme="manga"] .btn.subtle:active{transform:none;box-shadow:none;background:#ffd60a;color:#0d0d0d}
+[data-theme="manga"] .btn.danger{background:#ffffff;color:#d7191f;box-shadow:3px 3px 0 #d7191f}
+[data-theme="manga"] .btn.danger:hover{background:#ffe9e9;box-shadow:4px 4px 0 #d7191f}
+
+/* ---------- plates ---------- */
+[data-theme="manga"] .result-bar strong{padding:0 6px;background:linear-gradient(transparent 62%,#ffd60a 62%)}
+[data-theme="manga"] .result-num{padding:0 12px;background:#0d0d0d;color:#ffffff;font-size:19px;letter-spacing:.02em}
+[data-theme="manga"] .card-work{
+  align-self:flex-start;max-width:100%;padding:0 5px;font-weight:800;
+  background:linear-gradient(transparent 52%,var(--w-chip) 52%);
+}
+[data-theme="manga"] .card-work::before,[data-theme="manga"] .detail-work::before{display:none}
+[data-theme="manga"] .card h3{font-weight:800}
+[data-theme="manga"] .ja-name{color:#3f3f3f}
+[data-theme="manga"] .tag{font-weight:600;color:#262626}
+[data-theme="manga"] .role-badge{font-weight:800;transform:rotate(-3deg)}
+[data-theme="manga"] .card-index{text-transform:uppercase;letter-spacing:.04em;-webkit-text-stroke:3px #ffffff;paint-order:stroke fill}
+[data-theme="manga"] .image-kind{font-weight:700;color:#0d0d0d}
+[data-theme="manga"] .rating:not(.unrated){
+  padding:3px 9px 1px;border:2px solid #0d0d0d;background:#ffd60a;box-shadow:2px 2px 0 #0d0d0d;color:#0d0d0d;transform:rotate(-3deg);
+}
+[data-theme="manga"] .rating small{color:#0d0d0d;font-weight:700}
+[data-theme="manga"] .cv{font-weight:600;color:#262626}
+[data-theme="manga"] .tag-more{color:#575757}
+
+/* ---------- chapter headers for grouped view ---------- */
+[data-theme="manga"] .section-title{align-items:stretch;padding-bottom:0;border-bottom:5px solid #0d0d0d}
+[data-theme="manga"] .section-title h2{
+  align-items:stretch;gap:0;padding:0 18px 0 0;background:#0d0d0d;color:#ffffff;font-size:26px;line-height:1.2;
+}
+[data-theme="manga"] .sec-no{display:flex;align-items:center;margin-right:16px;padding:6px 14px 4px;background:#ffd60a;color:#0d0d0d}
+[data-theme="manga"] .section-title h2 small{align-self:center;margin-left:14px;padding:0 9px;background:#ffffff;color:#0d0d0d;font-weight:700}
+[data-theme="manga"] .section-title .btn{align-self:center;margin-bottom:6px}
+[data-theme="manga"] .empty{border:3px dashed #0d0d0d;background:#ffffff}
+
+/* ---------- dialogs ---------- */
+[data-theme="manga"] .dialog-head h2{letter-spacing:.04em}
+[data-theme="manga"] .dialog-head .icon-btn{color:#ffffff}
+[data-theme="manga"] .dialog-head .icon-btn:hover{background:#ffd60a;border-color:#ffd60a;color:#0d0d0d}
+[data-theme="manga"] .dialog-head .icon-btn:disabled:hover{background:none;border-color:transparent;color:#ffffff}
+[data-theme="manga"] .detail-image{border-right:3px solid #0d0d0d}
+[data-theme="manga"] .detail-work{align-self:flex-start;width:fit-content;padding:0 8px;font-weight:800;background:linear-gradient(transparent 52%,var(--w-chip) 52%)}
+[data-theme="manga"] .detail-content h2{
+  width:fit-content;max-width:100%;padding:0 10px 0 2px;-webkit-text-stroke:.8px #0d0d0d;
+  background:linear-gradient(transparent 58%,#ffd60a 58%,#ffd60a 92%,transparent 92%);
+}
+[data-theme="manga"] .detail-content h3{width:fit-content;padding:4px 12px;background:#0d0d0d;color:#ffffff;font-size:12px;letter-spacing:.22em}
+[data-theme="manga"] .detail-content h3::after{display:none}
+[data-theme="manga"] .fact-label{font-weight:700;color:#3f3f3f}
+[data-theme="manga"] .rating-card{box-shadow:5px 5px 0 #0d0d0d}
+[data-theme="manga"] .rating-card.is-empty{background:#ffffff}
+[data-theme="manga"] .score-max{font-weight:700;color:#0d0d0d}
+[data-theme="manga"] .meter i{height:14px;border:2px solid #0d0d0d}
+[data-theme="manga"] .note-box{box-shadow:4px 4px 0 #0d0d0d}
+[data-theme="manga"] .note-box.empty-note{box-shadow:none;background:#ffffff;border-style:dashed}
+[data-theme="manga"] .sources a{font-weight:600;color:#0d0d0d}
+[data-theme="manga"] .sources a:hover{background:#ffd60a;border-color:#0d0d0d;color:#0d0d0d}
+[data-theme="manga"] .import-summary{border:3px solid #0d0d0d;background:rgba(255,214,10,.42)}
+[data-theme="manga"] .tag-choice{font-weight:600}
+[data-theme="manga"] .form-section{color:#0d0d0d}
+[data-theme="manga"] .form-section::before{background:#0d0d0d}
+[data-theme="manga"] .dropzone{border-width:3px}
+
+/* ---------- menu, toast, misc ---------- */
+[data-theme="manga"] .theme-menu{box-shadow:6px 6px 0 #0d0d0d}
+[data-theme="manga"] .theme-option:hover,[data-theme="manga"] .theme-option:focus-visible{background:#ffd60a}
+[data-theme="manga"] .theme-option .t-name small{color:#3f3f3f}
+[data-theme="manga"] .theme-option .t-check{color:#0d0d0d}
+[data-theme="manga"] .to-top{background:#ffd60a;border:3px solid #0d0d0d;box-shadow:3px 3px 0 #0d0d0d;color:#0d0d0d}
+[data-theme="manga"] .footnote button{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;font-weight:700}
+[data-theme="manga"] .local-state{font-weight:700;color:#0d0d0d}
+
+@media (max-width:950px){
+  [data-theme="manga"] .page-head{grid-template-columns:minmax(0,1fr);grid-template-areas:"eyebrow" "title" "stats" "actions"}
+  [data-theme="manga"] .page-head .actions{margin-top:22px;justify-self:start}
+  [data-theme="manga"] .page-head .actions .btn-label{display:inline}
+  [data-theme="manga"] .head-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+}
+@media (max-width:850px){
+  [data-theme="manga"] .stat,[data-theme="manga"] .stat:first-child{flex-direction:column;align-items:flex-start;gap:0;padding:6px 12px}
+}
+
+@media (max-width:700px){
+  [data-theme="manga"] .page-head::before{width:200px;height:120px}
+  [data-theme="manga"] .head-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
+  [data-theme="manga"] .stat,[data-theme="manga"] .stat:first-child{flex-direction:column;align-items:flex-start;gap:0;padding:6px 10px 6px;box-shadow:3px 3px 0 #0d0d0d}
+  [data-theme="manga"] .stat b{font-size:40px}
+  [data-theme="manga"] .stat span{font-size:12px}
+  [data-theme="manga"] .page-head h1{font-size:38px}
+  [data-theme="manga"] .section-title h2{font-size:21px}
+  [data-theme="manga"] .sec-no{font-size:24px;padding:4px 10px 3px;margin-right:12px}
+}
