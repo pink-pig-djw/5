@@ -1,6 +1,6 @@
 # Eidolon
 
-静态动漫角色档案：811 位角色、33 部作品。无需构建步骤。
+静态动漫角色档案：986 位角色、40 部作品。无需构建步骤。
 
 - `index.html`：页面结构；`css/style.css`：共享样式骨架（布局、组件结构、响应式），所有颜色、圆角、边框、阴影和字体都读取设计令牌。
 - `css/theme-paper.css`、`theme-night.css`、`theme-manga.css`、`theme-sakura.css`、`theme-cyber.css`、`theme-wa.css`：六套可切换的界面风格，各自只定义令牌和少量专属装饰。
@@ -14,7 +14,7 @@
 
 Cloudflare Workers Builds 监听 `main`，使用 `npx wrangler deploy`；`wrangler.jsonc` 指向根目录静态资源，`.assetsignore` 排除开发文件。不要再将图片内嵌回 HTML 或数据文件。所有部署资源必须小于 25 MiB。
 
-本地存储仍使用 `eizou.character.archive.v1` 和 `eizou.character.preferences.v1`，schemaVersion 1 保持不变，catalogVersion 升至 4。目录 v4 为旧用户追加本次新增的 185 位角色，不恢复之前删除的旧角色，不覆盖个人编辑。旧 `seedImageRef` 自动解析为独立资源；已有用户上传的 Base64 图片、评分、备注、自定义档案和删除记录保留。JSON 备份内的内置图片使用相对路径，上传图片保留原有数据格式。
+本地存储仍使用 `eizou.character.archive.v1` 和 `eizou.character.preferences.v1`，schemaVersion 1 保持不变，catalogVersion 升至 5。目录 v5 为 v4 用户追加本次新增的 175 位角色；更早版本按引入版本补齐历次新增角色，不恢复之前删除的旧角色，不覆盖个人编辑。旧 `seedImageRef` 自动解析为独立资源；已有用户上传的 Base64 图片、评分、备注、自定义档案和删除记录保留。JSON 备份内的内置图片使用相对路径，上传图片保留原有数据格式。
 
 网站 ZIP 包含预置目录和所有资源；个人修改仍请另行导出 JSON。离线副本与在线站点的浏览器存储相互独立。
 `node scripts/check-assets.mjs` 检查资源路径、样式表引用的字体、目录 ID、Base64 误嵌入与文件大小，并确认每套风格都定义了骨架用到的全部设计令牌、且出现在风格菜单里。Wrangler 部署时会自动运行此检查。
@@ -60,3 +60,21 @@ Cloudflare Workers Builds 监听 `main`，使用 `npx wrangler deploy`；`wrangl
 EVA 的惣流与式波按不同版本分列；金木研与佐佐木琲世合并为同一人物。简介中的改编差异与剧情范围有单独说明，未知资料留空。
 
 运行 `node scripts/check-catalog.mjs` 可验证 v1/v2/v3 升级、用户编辑、上传图片、删除记录与 v4 重复加载的兼容性。
+
+## 2026-10-01 目录扩充
+
+新增 7 部作品、175 份角色档案及 175 张独立本地图片。每份档案保留两段中文简介、角色原名、日语声优和资料来源，未知个人资料留空。
+
+| 作品 | 新增档案 |
+|---|---:|
+| 我的青春恋爱物语果然有问题 | 23 |
+| Charlotte | 15 |
+| 冰海战记 | 23 |
+| 魔女之旅 | 14 |
+| 凉宫春日系列 | 14 |
+| 鬼灭之刃 | 40 |
+| 咒术回战 | 46 |
+
+《冰海战记》以动画两季为范围；《凉宫春日》覆盖本篇动画与《消失》，不混入衍生作品；《魔女之旅》的艾姆妮西亚注明动画出场与小说经历的差异；《鬼灭之刃》《咒术回战》包含原作主线设定与剧透。夏油杰与羂索分别建档，乙骨与里香的不同阶段在简介中说明。
+
+原有 811 份角色和迁移基线保持原值；六套主题及本地存储 key 不变。运行 `node scripts/check-catalog.mjs` 验证 v1—v5 的追加迁移、旧档案自定义内容、删除记录、上传图片及重复加载。
