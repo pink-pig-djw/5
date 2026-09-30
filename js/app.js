@@ -6,12 +6,14 @@ document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.datase
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SEED_ART=EIDOLON_DATA.assetData;
 const KEY='eizou.character.archive.v1', PREF='eizou.character.preferences.v1',SEED=EIDOLON_DATA.seedData.map(c=>({...c,image:c.image||SEED_ART[c.imageAsset]||c.imageUrl,fullImage:c.fullImage||SEED_ART[c.fullImageAsset]||c.fullImageUrl||c.image||SEED_ART[c.imageAsset]||c.imageUrl})), ROLES=['主角','配角','反派','路人','其他'];
-const CATALOG_VERSION=3, BASELINE=new Map(EIDOLON_DATA.catalogBaseline.map(c=>[c.id,c]));
+const CATALOG_VERSION=4, BASELINE=new Map(EIDOLON_DATA.catalogBaseline.map(c=>[c.id,c]));
 const IMAGE_BASELINE=new Map(EIDOLON_DATA.catalogImageBaseline.map(c=>[c.id,{...c,image:c.image||SEED_ART[c.imageAsset]||c.imageUrl,fullImage:c.fullImage||SEED_ART[c.fullImageAsset]||c.fullImageUrl||c.image||SEED_ART[c.imageAsset]||c.imageUrl}]));
 const WORK_ALIASES={'少女终末旅行':['终末少女的旅行','终末少女旅行',"Girls Last Tour"],'来自深渊':['Made in Abyss'],'心理测量者':['PSYCHO-PASS'],'来自新世界':['Shinsekai Yori'],'寒蝉鸣泣之时':['Higurashi'],'未来日记':['Mirai Nikki'],'声之形':['A Silent Voice'],'穿越时空的少女':['The Girl Who Leapt Through Time'],'莉可丽丝':['Lycoris Recoil'],'章鱼噼的原罪':['Takopi'],'命运石之门':['Steins;Gate','Steins Gate','石头门','SG'],'孤独摇滚':['Bocchi the Rock','ぼっち・ざ・ろっく','波奇'],'败犬女主太多了！':['败犬女主太多了','Makeine','Make Heroine ga Oosugiru'],'轻音少女':['K-ON','KON','けいおん'],'恶魔人':['Devilman','DEVILMAN crybaby'],'恶魔人 crybaby':['恶魔人','Devilman','DEVILMAN crybaby'],'Angel Beats!':['angelbeat','Angel Beats','天使的心跳'],'葬送的芙莉莲':['Frieren','Sousou no Frieren'],'进击的巨人':['Attack on Titan','Shingeki no Kyojin'],'魔法禁书目录':['とある魔術の禁書目録','A Certain Magical Index','Toaru Majutsu no Index','魔禁'],'紫罗兰永恒花园':['紫罗兰的永恒花园','ヴァイオレット・エヴァーガーデン','Violet Evergarden','京紫'],'吹响吧！上低音号':['吹响吧上低音号','吹响吧 上低音号','響け！ユーフォニアム','Hibike Euphonium','Sound Euphonium','京吹','莉兹与青鸟'],'青春猪头少年系列':['青春猪头少年','青春笨蛋少年','青春ブタ野郎','Rascal Does Not Dream','Bunny Girl Senpai','青猪']};
+Object.assign(WORK_ALIASES,{"冰菓":["氷菓","Hyouka","古典部系列"],"东京喰种":["東京喰種","东京食尸鬼","Tokyo Ghoul","东京喰种:re"],"新世纪福音战士（EVA）":["EVA","Evangelion","新世纪福音战士","新世紀エヴァンゲリオン","福音战士新剧场版"],"与你相恋到生命尽头":["与你相恋到世界尽头","きみが死ぬまで恋をしたい","Kimishinu","I Want to Love You Till Your Dying Day"],"尼古喵喵":["ヤニねこ","Yani Neko","Chainsmoker Cat","雅尼猫","烟猫"],"夏日重现":["サマータイムレンダ","Summer Time Rendering","夏日时光"],"BanG Dream! It's MyGO!!!!!":["MyGO","MyGO!!!!!","BanG Dream","迷子","バンドリ"],"月色真美":["月がきれい","Tsuki ga Kirei"],"刀剑神域":["ソードアート・オンライン","Sword Art Online","SAO","Alicization","序列之争"],"约定的梦幻岛":["約束のネバーランド","The Promised Neverland","约定的梦幻岛第二季"]});
 const DEFAULT_TAGS=['温柔','冷静','坚强','理性','乐观','内向','傲娇','天然呆','腹黑','勇敢','善良','敏锐','执着','神秘','活泼','独立'];
 // Each series gets a stable accent hue (OKLCH degrees); unknown works fall back to a name hash.
 const WORK_HUES=new Map(Object.entries({'孤独摇滚':352,'未来日记':8,'寒蝉鸣泣之时':22,'莉可丽丝':38,'命运石之门':54,'青春猪头少年系列':68,'来自深渊':80,'轻音少女':98,'章鱼噼的原罪':112,'进击的巨人':130,'葬送的芙莉莲':148,'来自新世界':165,'声之形':182,'心理测量者':198,'穿越时空的少女':214,'吹响吧！上低音号':230,'魔法禁书目录':246,'紫罗兰永恒花园':262,'败犬女主太多了！':278,'Angel Beats!':294,'少女终末旅行':310,'恶魔人 crybaby':326,'恶魔人':326,Another:342}));
+for(const [work,hue] of Object.entries({"冰菓":130,"东京喰种":20,"新世纪福音战士（EVA）":286,"与你相恋到生命尽头":345,"尼古喵喵":64,"夏日重现":205,"BanG Dream! It's MyGO!!!!!":223,"月色真美":248,"刀剑神域":175,"约定的梦幻岛":75}))WORK_HUES.set(work,hue);
 function workHue(name){if(WORK_HUES.has(name))return WORK_HUES.get(name);let h=2166136261;for(const ch of name){h^=ch.codePointAt(0);h=Math.imul(h,16777619)}return (h>>>0)%360}
 const ROLE_CLASS={'主角':'lead','反派':'villain','配角':'support','路人':'extra'};
 let lastStoredValue=null,editorGeneration=0,records=[],loadError=false,storageWritable=true,currentId=null,editingId=null,draftTags=[],draftImage='',draftImageKind='',pendingImport=null,imageBusy=false,seedById=new Map(SEED.map(c=>[c.id,c]));
@@ -38,7 +40,8 @@ function migrateCatalog(list,version){
       }
       if(c.bio===seed.bio)c.bioSources=seed.bioSources||[];
     }
-    if(stockImage){
+    // v3 already migrated stock artwork; adding a catalog must not reset custom image settings.
+    if(version<3&&stockImage){
       c.image=seed.image;
       if(stockFullImage)c.fullImage=seed.fullImage||seed.image;
       c.imageSourceUrl=seed.imageSourceUrl||'';c.imageKind=seed.imageKind;c.imageFit='contain';
