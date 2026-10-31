@@ -11,14 +11,19 @@ const context = vm.createContext({EIDOLON_DATA, URL, console, crypto: globalThis
 vm.runInContext(app.slice(0, app.indexOf('function notice(')), context);
 const run = code => vm.runInContext(code, context);
 const plain = value => JSON.parse(JSON.stringify(value));
-const additions = plain(run('SEED.filter(c => c.catalogIntroducedVersion === 5)'));
-assert.equal(additions.length, 175);
-assert.equal(new Set(additions.map(c => c.work)).size, 7);
+const v5 = plain(run('SEED.filter(c => c.catalogIntroducedVersion === 5)'));
+assert.equal(v5.length, 175);
+assert.equal(new Set(v5.map(c => c.work)).size, 7);
+const additions = plain(run('SEED.filter(c => c.catalogIntroducedVersion === 6)'));
+assert.equal(additions.length, 34);
+assert.equal(new Set(additions.map(c => c.work)).size, 1);
+assert(additions.every(c => c.work === '药屋少女的呢喃' && /^https:\/\/bgm\.tv\/character\/\d+$/.test(c.sourceUrl)));
+assert(v5.every(c => c.bio.length >= 180 && c.bio.includes('\n\n') && c.imageFit === 'contain'));
 assert(additions.every(c => c.bio.length >= 180 && c.bio.includes('\n\n') && c.imageFit === 'contain'));
 assert(additions.every(c => c.rating === null && c.notes === '' && c.image.startsWith('assets/characters/')));
 
-// Exercise both recent catalogues: v3 must receive v4 and v5, v4 only receives v5.
-for (const version of [3, 4]) {
+// Exercise the recent catalogues: each older archive receives every later addition exactly once.
+for (const version of [3, 4, 5]) {
   context.version = version;
   const expectedNew = plain(run('SEED.filter(c => c.catalogIntroducedVersion > version)'));
   const older = plain(run('SEED.filter(c => (c.catalogIntroducedVersion || 1) <= version).map((c,i) => normalize(c,i))'));
@@ -36,22 +41,22 @@ for (const version of [3, 4]) {
   const before = plain(run('fixture.map((c,i) => normalize(expandStored(c),i))'));
   const migrated = plain(run('migrateCatalog(fixture,version)'));
   assert.equal(migrated.length, older.length + expectedNew.length);
-  assert.deepEqual(migrated.slice(0, older.length), before, `v5 must preserve every normalized v${version} field`);
+  assert.deepEqual(migrated.slice(0, older.length), before, `v6 must preserve every normalized v${version} field`);
   assert(deleted.every(id => !migrated.some(c => c.id === id)), 'Do not restore deleted old characters');
   assert(expectedNew.every(c => migrated.some(n => n.id === c.id)));
   context.migrated = migrated;
   const stored = plain(run('storageEnvelope(migrated)'));
   assert.equal(stored.schemaVersion, 1);
-  assert.equal(stored.catalogVersion, 5);
+  assert.equal(stored.catalogVersion, 6);
   context.stored = stored;
-  assert.deepEqual(plain(run('migrateCatalog(stored.characters,5)')), migrated, 'Storage round trip');
-  assert.deepEqual(plain(run('migrateCatalog(migrated,5)')), migrated, 'Idempotent migration');
+  assert.deepEqual(plain(run('migrateCatalog(stored.characters,6)')), migrated, 'Storage round trip');
+  assert.deepEqual(plain(run('migrateCatalog(migrated,6)')), migrated, 'Idempotent migration');
 
   // Deleting a new character must also survive a reload of an already-upgraded library.
   context.withNewDeletion = migrated.filter(c => c.id !== additions[0].id);
-  assert.equal(run('migrateCatalog(withNewDeletion,5).length'), migrated.length - 1);
+  assert.equal(run('migrateCatalog(withNewDeletion,6).length'), migrated.length - 1);
   assert.equal(run('migrateCatalog([],version).length'), expectedNew.length, 'Empty old archive only gains new entries');
-  assert.equal(run('migrateCatalog([],5).length'), 0, 'An empty current archive remains empty');
+  assert.equal(run('migrateCatalog([],6).length'), 0, 'An empty current archive remains empty');
 }
 
 // Users upgrading directly from v1/v2 still receive all later additions without reviving deletions.
@@ -74,4 +79,4 @@ for (const version of [1, 2]) {
 }
 assert.equal(run('KEY'), 'eizou.character.archive.v1');
 assert.equal(run('PREF'), 'eizou.character.preferences.v1');
-console.log('Catalog v1/v2/v3/v4/v5 migrations, custom fields, uploads, deletions and round trips passed.');
+console.log('Catalog v1/v2/v3/v4/v5/v6 migrations, custom fields, uploads, deletions and round trips passed.');
